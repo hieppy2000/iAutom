@@ -1,0 +1,106 @@
+http://172.31.172.175:8080/job/sample/22/
+
+https://www.howtoforge.com/tutorial/how-to-install-jenkins-with-apache-on-ubuntu-16-04/
+
+https://christopher.su/2015/selenium-chromedriver-ubuntu/
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-on-ubuntu-16-04
+
+
+######## Ubuntu Virtual Box ###########
+
+
+
+# docker refs:
+http://stackoverflow.com/questions/39229589/how-to-run-application-from-docker-container-from-host-os
+
+https://stackoverflow.com/questions/23111631/cannot-download-docker-images-behind-a-proxy
+
+# Docker commands:
+docker build -f <dockerfile> .
+docker build -t <image_name> -f <dockerfile> .
+docker ps -a  # list all containers
+docker stop $(docker ps -a -q) # stop all containers
+docker rm $(docker ps -a -q) # remove all containers
+Docker rm <container id>  # remove single container
+docker images # list images
+docker mi <image>   # remove image
+
+
+### google chrome crash in docker container using robot framework ###
+https://github.com/ppodgorsek/docker-robot-framework
+https://github.com/SeleniumHQ/docker-selenium/wiki/Change-screen-resolution
+
+#### Video Recording ###
+https://github.com/elgalu/docker-selenium —> Video Record
+https://stackoverflow.com/questions/51192198/how-to-video-record-selenium-tests-running-headless-inside-a-docker
+###
+
+### THIS COMMAND IS WORKING###
+docker run -e SCREEN_WIDTH=1920 -e SCREEN_HEIGHT=1080 -e SCREEN_DEPTH=24 -v /home/hiep:/home/hiep -it selen_image1 /home/hiep/exec_msc/run_robot_suite.sh 
+####
+
+
+docker run -v /home/hiep:/home/hiep -it selen_image1 /bin/bash -c "/home/hiep/exec_msc/run_robot_suite.sh"
+
+docker run -v /home/hiep/my_dockers:/home/hiep/my_dockers -it selen_image1 python3 /home/hiep/my_dockers/selen_test.py
+
+docker run --rm -v /home/tlella/robot:/home/tlella/robot robot:2 /bin/bash -c "robot --outputdir /home/tlella/robot/reports/ test.txt"
+
+docker run -v /host/folder:/container/ -it <image> <executable> <arguments>
+Docker run -rm -v /home/hiep/docker_images:/home/hiep/docker_images -it selen_image /bin/bash -c “python /home/hiep/docker_iamges/selen_test.py”
+Or in window:
+docker run -v //c/Users/mrgloom/Desktop/data:/tmphost -it ubuntu ls -al /tmphost
+
+docker images #list images
+
+pip install selenium xvfbwrapper pyyaml pyvirtualdisplay robotframework robotframework-sshlibrary robotframework-selenium2library
+
+
+### selenium refs ##################
+
+from selenium import webdriver
+from robot.libraries.BuiltIn import BuiltIn
+from pyvirtualdisplay import Display
+
+def open_browser_with_extension():
+    display = Display(visible=0, size=(1900, 1200))
+    display.start()
+    options = webdriver.ChromeOptions()
+    options.add_argument("--no-sandbox")
+    options.add_argument('--ignore-certificate-errors')
+    options.add_argument('--ignore-ssl-errors')
+    caps = options.to_capabilities()
+    #driver = webdriver.Chrome(chrome_options=options)
+    #driver = webdriver.Remote(desired_capabilities=caps)
+    #driver.get('https://172.31.172.165/')
+    #print driver.title
+    instance = BuiltIn().get_library_instance('Selenium2Library').create_webdriver('Chrome', desired_capabilities=caps)
+    return instance
+
+
+FROM ubuntu
+ENV http_proxy http://proxy-wsa.esl.cisco.com:80
+ENV https_proxy http://proxy-wsa.esl.cisco.com:8080
+RUN apt-get update
+RUN apt-get install -y software-properties-common
+RUN apt-add-repository universe
+RUN apt-get update
+RUN apt-get install -y xvfb python-pip gtk2-engines-pixbuf x11-xkb-utils
+RUN apt-get -y install xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable
+RUN apt-get -y install libxpm4 libxrender1 libgtk2.0-0 libnss3 libgconf-2-4 xdg-utils
+RUN apt-get -y install wget unzip
+RUN apt-get -y install libpango1.0-0 libxss1 fonts-liberation libappindicator1 libcurl3
+RUN apt-get -y install libasound2 libssl-dev
+RUN wget http://chromedriver.storage.googleapis.com/2.29/chromedriver_linux64.zip
+RUN unzip chromedriver_linux64.zip
+RUN mv chromedriver /usr/bin/ && rm -f chromedriver_linux64.zip
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+RUN apt-get install -f
+RUN dpkg -i google-chrome*.deb
+RUN rm -f google-chrome-stable_current_amd64.deb
+RUN pip install selenium xvfbwrapper pyyaml pyvirtualdisplay robotframework robotframework-sshlibrary robotframework-selenium2library
+ADD xvfb.init /etc/init.d/xvfb
+RUN chmod +x /etc/init.d/xvfb
+RUN update-rc.d xvfb defaults
+ 
