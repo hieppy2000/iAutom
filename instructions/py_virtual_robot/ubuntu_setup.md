@@ -10,7 +10,7 @@ sudo pip3 install virtualenv
 virtualenv venv 
 
 #  can use any name insted of venv. You can also use a Python interpreter of your choice
-virtualenv -p /usr/bin/python2.7 venv
+virtualenv -p /usr/bin/python3 py3env
 
 # Active your virtual environment:
 source venv/bin/activate
@@ -22,7 +22,7 @@ source venv/bin/activate.fish
 deactivate
 
 # Create virtualenv using Python3
-virtualenv -p python3 myenv
+virtualenv -p python3 py3env
 
 # Instead of using virtualenv you can use this command in Python3
-python3 -m venv myenv
+python3 -m venv py3env
