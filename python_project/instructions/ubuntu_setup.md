@@ -20,9 +20,6 @@
   - Install python 3 (if you using mac or linux, create python virtual environment)
   - pip install robotframework
   - pip install --upgrade robotframework-seleniumlibrary
-  - pip install pyvirtualdisplay
-  - pip install paramiko
-  - pip install pexpect
   - https://github.com/robotframework/SeleniumLibrary#installation
 
 - Others:
