@@ -10,6 +10,7 @@
 - sudo pip install urllib3
 - sudo pip install cryptography
 - sudo pip install paramiko
+
 - pycrypto http://www.voidspace.org.uk/python/modules.shtml#pycrypto
 - paramiko (required to install VCForPython27.msi(http://www.microsoft.com/en-us/download/confirmation.aspx?id=44266) if it's required
 
